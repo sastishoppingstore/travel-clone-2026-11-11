@@ -1,0 +1,9 @@
+{
+  "name": "matchless-travels-clone",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Content clone of matchlesstravels.ca captured with REA",
+  "scripts": {
+    "start": "node serve.js . 8080"
+  }
+}

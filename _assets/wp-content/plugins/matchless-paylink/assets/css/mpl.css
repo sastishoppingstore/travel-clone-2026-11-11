@@ -1,0 +1,586 @@
+/* ═══════════════════════════════════════════════════════
+   Matchless PayLink — Customer Pay Page
+   Boarding Pass Design v2.0
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* ── Design tokens ── */
+:root {
+  --mpl-bg:        #0C1A27;
+  --mpl-gold:      #B8883C;
+  --mpl-cream:     #F6F1E7;
+  --mpl-cream2:    #EDE7D8;
+  --mpl-ink:       #18110A;
+  --mpl-ink-mid:   #5A4E3C;
+  --mpl-ink-faint: #9A8E7A;
+  --mpl-green:     #2A7A50;
+}
+
+/* ── Full-page takeover (applied via body.mpl-pay-page) ── */
+body.mpl-pay-page {
+  background: var(--mpl-bg) !important;
+  margin: 0 !important;
+  padding: 48px 20px 60px !important;
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  font-family: 'DM Sans', -apple-system, sans-serif !important;
+}
+
+/* Hide theme chrome on pay page */
+body.mpl-pay-page .site-header,
+body.mpl-pay-page .site-footer,
+body.mpl-pay-page #masthead,
+body.mpl-pay-page #colophon,
+body.mpl-pay-page header:not(.mpl-ticket *),
+body.mpl-pay-page footer:not(.mpl-ticket *),
+body.mpl-pay-page .site-navigation,
+body.mpl-pay-page .main-navigation,
+body.mpl-pay-page nav:not(.mpl-ticket *),
+body.mpl-pay-page .breadcrumb,
+body.mpl-pay-page .breadcrumbs,
+body.mpl-pay-page .entry-header,
+body.mpl-pay-page .entry-title,
+body.mpl-pay-page .entry-footer,
+body.mpl-pay-page #secondary,
+body.mpl-pay-page .sidebar,
+body.mpl-pay-page .widget-area,
+body.mpl-pay-page .page-title-wrap,
+body.mpl-pay-page .ast-breadcrumbs-wrapper,
+body.mpl-pay-page .ast-above-header-wrap,
+body.mpl-pay-page .ast-header-top-bar { display: none !important; }
+
+/* Unwrap theme layout containers */
+body.mpl-pay-page .site-content,
+body.mpl-pay-page .content-area,
+body.mpl-pay-page #primary,
+body.mpl-pay-page #content,
+body.mpl-pay-page .container,
+body.mpl-pay-page .site-inner,
+body.mpl-pay-page .ast-container,
+body.mpl-pay-page .entry-content,
+body.mpl-pay-page .hentry,
+body.mpl-pay-page article {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  float: none !important;
+}
+
+/* Atmospheric background layers */
+body.mpl-pay-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 85%, rgba(30, 80, 65, 0.45) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 15%, rgba(180, 130, 50, 0.12) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── TICKET ── */
+.mpl-ticket {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  background: var(--mpl-cream);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.06) inset,
+    0 32px 80px rgba(0,0,0,0.55),
+    0 4px 16px rgba(0,0,0,0.3);
+  animation: mpl-float-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes mpl-float-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── TOP STUB ── */
+.mpl-stub-top {
+  padding: 36px 40px 30px;
+}
+
+.mpl-brand-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.mpl-brand { display: flex; flex-direction: column; gap: 2px; }
+
+.mpl-brand-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--mpl-ink);
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+
+.mpl-brand-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--mpl-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+}
+
+.mpl-logo { max-height: 40px; width: auto; }
+
+.mpl-secure-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px 5px 8px;
+  border: 1px solid rgba(42, 122, 80, 0.3);
+  background: rgba(42, 122, 80, 0.06);
+}
+
+.mpl-secure-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mpl-green);
+  animation: mpl-pulse-dot 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes mpl-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+.mpl-secure-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--mpl-green);
+}
+
+/* Fields */
+.mpl-field { margin-bottom: 22px; }
+.mpl-field:last-child { margin-bottom: 0; }
+
+.mpl-field-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--mpl-gold);
+  margin-bottom: 5px;
+}
+
+.mpl-field-value-lg {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--mpl-ink);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.mpl-field-value {
+  font-size: 13px;
+  color: var(--mpl-ink-mid);
+  font-weight: 400;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.mpl-fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ── PERFORATION ── */
+.mpl-perf {
+  display: flex;
+  align-items: center;
+  height: 0;
+  position: relative;
+  margin: 0;
+}
+
+.mpl-perf-notch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--mpl-bg);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.mpl-perf-left  { margin-left:  -14px; }
+.mpl-perf-right { margin-right: -14px; }
+
+.mpl-perf-dash {
+  flex: 1;
+  height: 0;
+  border-top: 1.5px dashed var(--mpl-cream2);
+  margin: 0 4px;
+}
+
+/* ── BOTTOM STUB ── */
+.mpl-stub-bottom {
+  padding: 28px 40px 34px;
+}
+
+/* Amount */
+.mpl-amount-section { margin-bottom: 22px; }
+
+.mpl-amount-display {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 6px 0 4px;
+}
+
+.mpl-amount-currency {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--mpl-ink-mid);
+  letter-spacing: 1px;
+}
+
+.mpl-amount-figure {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--mpl-ink);
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+.mpl-amount-cents {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--mpl-ink-mid);
+  letter-spacing: -1px;
+  vertical-align: super;
+}
+
+.mpl-amount-note {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--mpl-ink-faint);
+}
+
+/* Expiry bar */
+.mpl-expiry-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  background: rgba(184, 136, 60, 0.08);
+  border-left: 2px solid var(--mpl-gold);
+  margin-bottom: 22px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--mpl-gold);
+}
+
+/* Test mode banner */
+.mpl-testbanner {
+  background: #fff4e5;
+  border: 1px solid #f0c070;
+  color: #7a4a00;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 9px 14px;
+  margin-bottom: 16px;
+}
+
+/* Moneris payment area */
+.mpl-payment { margin-bottom: 18px; }
+
+.mpl-status {
+  font-size: 13px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.mpl-status:empty { display: none; }
+
+.mpl-status-info    { background: #EFF6FF; color: #1E40AF; border-left: 3px solid #3B82F6; }
+.mpl-status-success { background: #ECFDF5; color: #047857; border-left: 3px solid #10B981; font-weight: 600; }
+.mpl-status-error   { background: #FEF2F2; color: #B91C1C; border-left: 3px solid #EF4444; }
+
+#monerisCheckout { min-height: 1px; }
+
+/* Pay Now button */
+.mpl-pay-btn {
+  display: block;
+  width: 100%;
+  padding: 18px 24px;
+  background: var(--mpl-ink);
+  color: var(--mpl-cream);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  margin-bottom: 12px;
+}
+.mpl-pay-btn:hover  { background: #2c2218; }
+.mpl-pay-btn:active { transform: scale(0.99); }
+
+/* Trust row */
+.mpl-trust-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.mpl-trust-item {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--mpl-ink-faint);
+  padding: 0 12px;
+}
+
+.mpl-trust-item:not(:last-child) {
+  border-right: 1px solid var(--mpl-cream2);
+}
+
+/* Biller info */
+.mpl-biller {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--mpl-cream2);
+  font-size: 11px;
+  color: var(--mpl-ink-faint);
+  line-height: 1.6;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Simple message card (error/paid/expired/cancelled states) */
+.mpl-ticket-message { max-width: 420px; }
+
+.mpl-stub-solo {
+  padding: 40px !important;
+  text-align: center;
+}
+
+.mpl-message-text {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--mpl-ink-mid);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.mpl-contact-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--mpl-ink-faint);
+}
+
+.mpl-contact-link a {
+  color: var(--mpl-gold);
+  text-decoration: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 500px) {
+  body.mpl-pay-page { padding: 0 !important; }
+
+  .mpl-ticket {
+    max-width: 100%;
+    min-height: 100dvh;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .mpl-stub-top    { padding: 44px 24px 26px; }
+  .mpl-stub-bottom { padding: 24px 24px 44px; }
+  .mpl-amount-figure { font-size: 44px; }
+  .mpl-field-value-lg { font-size: 22px; }
+  .mpl-trust-item { padding: 0 8px; font-size: 7px; }
+  .mpl-fields-row { grid-template-columns: 1fr; gap: 16px; }
+}
+
+/* ── Moneris Checkout overlay — centered, desktop & mobile friendly ── */
+.mpl-mco-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(18, 14, 8, 0.72);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  padding: 24px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.mpl-mco-overlay.mpl-mco-open {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.mpl-mco-panel {
+  position: relative;
+  background: #ffffff;
+  width: 100%;
+  max-width: 640px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.5);
+  padding: 22px;
+  box-sizing: border-box;
+  min-height: 140px;
+}
+.mpl-mco-panel #monerisCheckout { width: 100%; }
+.mpl-mco-panel #monerisCheckout iframe { width: 100% !important; max-width: 100% !important; border: 0; }
+.mpl-mco-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 2;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  color: #8a8170;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+}
+.mpl-mco-close:hover { color: #161008; }
+
+@media (max-width: 600px) {
+  .mpl-mco-overlay { padding: 0; }
+  .mpl-mco-panel {
+    max-width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+    padding: 52px 12px 16px;
+  }
+}
+
+/* ── Single inline payment card (Moneris form embedded, no pop-up) ── */
+.mpl-pay-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+}
+.mpl-pay-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 36px 34px 28px;
+  box-sizing: border-box;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.05) inset,
+    0 32px 80px rgba(0,0,0,0.5),
+    0 4px 16px rgba(0,0,0,0.28);
+  animation: mpl-float-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Brand (our logo, or sub-agent name) */
+.mpl-pay-head { text-align: center; margin-bottom: 22px; }
+.mpl-pay-logo { max-height: 56px; width: auto; }
+.mpl-pay-bizname {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--mpl-ink);
+  letter-spacing: -0.3px;
+}
+
+/* Amount + what they're paying for */
+.mpl-pay-summary {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #ECE6DA;
+}
+.mpl-pay-amount-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mpl-ink-faint);
+  margin-bottom: 7px;
+}
+.mpl-pay-amount {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--mpl-ink);
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+.mpl-pay-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  color: var(--mpl-ink-mid);
+  margin-top: 12px;
+  line-height: 1.45;
+}
+.mpl-pay-invoice {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--mpl-ink-faint);
+  margin-top: 7px;
+}
+
+/* The Moneris card form, embedded inline (not a pop-up) */
+.mpl-mco-inline { width: 100%; min-height: 580px; }
+.mpl-mco-inline iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  border: 0;
+  min-height: 580px;
+}
+
+/* Retry button (shown after a decline / cancel) */
+#mpl-pay-retry-wrap { margin-top: 14px; }
+
+@media (max-width: 560px) {
+  body.mpl-pay-page { padding: 0 !important; }
+  .mpl-pay-wrap { max-width: 100%; }
+  .mpl-pay-card {
+    border-radius: 0;
+    min-height: 100dvh;
+    padding: 32px 18px 26px;
+    box-shadow: none;
+  }
+  .mpl-pay-amount { font-size: 38px; }
+  .mpl-mco-inline, .mpl-mco-inline iframe { min-height: 620px; }
+}

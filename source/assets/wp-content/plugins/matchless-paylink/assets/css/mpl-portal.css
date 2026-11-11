@@ -1,0 +1,151 @@
+/* ═══════════════════════════════════════════════════════
+   Matchless PayLink — Staff Portal (standalone front-end)
+   Login / 2FA + base shell. Dashboard reuses mpl-admin.css.
+   ═══════════════════════════════════════════════════════ */
+
+.mpl-portal-body {
+  /* Design tokens (mirrors mpl-admin.css so the standalone page resolves them) */
+  --ma-bg:        #F9F7F3;
+  --ma-white:     #FFFFFF;
+  --ma-border:    #E8E3D9;
+  --ma-border2:   #D9D3C5;
+  --ma-ink:       #161008;
+  --ma-ink-mid:   #5A4E3C;
+  --ma-ink-faint: #9A8E7A;
+  --ma-gold:      #B8883C;
+  --ma-teal:      #0D5148;
+  --ma-red:       #8B2B2B;
+  --ma-green:     #1E6B45;
+
+  margin: 0;
+  padding: 0;
+  background: var(--ma-bg);
+  color: var(--ma-ink);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+}
+
+/* Standalone: kill the wp-admin negative-margin offset */
+.mpl-portal-body .mpl-admin-wrap {
+  margin: 0;
+  padding-bottom: 64px;
+}
+
+/* ── Auth screens (login / 2FA / set password) ── */
+.mpl-auth-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.mpl-auth-card {
+  background: var(--ma-white);
+  border: 1px solid var(--ma-border);
+  border-radius: 4px;
+  box-shadow: 0 24px 60px -28px rgba(22, 16, 8, 0.28);
+  width: 100%;
+  max-width: 392px;
+  padding: 44px 40px 36px;
+  box-sizing: border-box;
+}
+
+.mpl-auth-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ma-ink);
+}
+.mpl-auth-brand span { color: var(--ma-gold); }
+
+.mpl-auth-sub {
+  font-size: 13px;
+  color: var(--ma-ink-faint);
+  margin: 6px 0 26px;
+  letter-spacing: 0.01em;
+}
+
+.mpl-auth-label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ma-ink-mid);
+  margin: 16px 0 7px;
+}
+
+.mpl-auth-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ma-ink);
+  background: var(--ma-bg);
+  border: 1px solid var(--ma-border2);
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.mpl-auth-input:focus {
+  border-color: var(--ma-gold);
+  background: var(--ma-white);
+}
+
+.mpl-auth-code {
+  font-family: 'Space Mono', monospace;
+  font-size: 24px;
+  letter-spacing: 0.4em;
+  text-align: center;
+}
+
+.mpl-auth-btn {
+  width: 100%;
+  margin-top: 24px;
+  padding: 13px 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ma-bg);
+  background: var(--ma-ink);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.mpl-auth-btn:hover { opacity: 0.88; }
+
+.mpl-auth-foot {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+}
+.mpl-auth-foot a { color: var(--ma-gold); text-decoration: none; }
+.mpl-auth-foot a:hover { text-decoration: underline; }
+
+.mpl-auth-secure {
+  margin-top: 22px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--ma-ink-faint);
+  text-transform: uppercase;
+}
+
+/* Generic card used on the Accounts screen */
+.mpl-portal-body .mpl-card {
+  background: var(--ma-white);
+  border: 1px solid var(--ma-border);
+  border-radius: 4px;
+  padding: 28px;
+}
+
+/* Notice spacing on standalone pages */
+.mpl-portal-body .mpl-notice { margin: 0 0 24px; }

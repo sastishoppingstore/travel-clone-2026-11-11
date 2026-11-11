@@ -1,0 +1,10 @@
+.listing-dashboard-page #jmDashboardOverlay, #job-manager-job-dashboard .jm-dialog{
+   display: none!important;
+}
+
+.elementor-icon, .elementor-icon i, .elementor-icon svg{
+   font-size: inherit;
+}
+.elementor-icon{
+   font-size: 14px;
+}
